@@ -1,0 +1,15 @@
+{
+  "itemGroup.echogates": "Echo Gates",
+  "block.echogates.example_block": "Example Block",
+  "block.echogates.echo_gate": "Echo Gate",
+  "item.echogates.example_item": "Example Item",
+  "item.echogates.sculk_heart": "Sculk Heart",
+
+  "echogates.configuration.title": "Echo Gates Configs",
+  "echogates.configuration.section.echogates.common.toml": "Echo Gates Configs",
+  "echogates.configuration.section.echogates.common.toml.title": "Echo Gates Configs",
+  "echogates.configuration.items": "Item List",
+  "echogates.configuration.logDirtBlock": "Log Dirt Block",
+  "echogates.configuration.magicNumberIntroduction": "Magic Number Text",
+  "echogates.configuration.magicNumber": "Magic Number"
+}

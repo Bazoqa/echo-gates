@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "echogates:block/echo_gate",
+    "portal": "echogates:block/echo_gate"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 0],
+      "to": [9, 16, 16],
+      "faces": {
+        "west": {"uv": [0, 0, 16, 16], "texture": "#portal"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#portal"}
+      }
+    }
+  ]
+}

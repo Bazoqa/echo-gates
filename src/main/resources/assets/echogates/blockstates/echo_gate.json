@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "echogates:block/echo_gate_ns"
+    },
+    "axis=z": {
+      "model": "echogates:block/echo_gate_ew"
+    }
+  }
+}

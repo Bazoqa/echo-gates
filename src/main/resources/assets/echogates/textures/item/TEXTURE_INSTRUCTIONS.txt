@@ -1,0 +1,13 @@
+The Echo Crystal item requires a texture file at this location:
+src/main/resources/assets/echogates/textures/item/echo_crystal.png
+
+The texture should be a 16x16 PNG image.
+
+You can:
+1. Create your own texture using an image editor
+2. Use an AI tool to generate one
+3. Find a free texture online (respecting licenses)
+4. Use a placeholder texture temporarily
+
+For a quick placeholder, you could copy the echo_shard.png from Minecraft's assets
+or create a simple colored square in any image editor.
