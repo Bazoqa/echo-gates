@@ -48,11 +48,6 @@ public class PortalActivationHandler {
                 itemStack.shrink(1);
             }
             
-            player.displayClientMessage(
-                net.minecraft.network.chat.Component.literal("§b§oEcho Gate Activated!"), 
-                true
-            );
-            
             // Play activation sounds
             level.playSound(null, pos, 
                 net.minecraft.sounds.SoundEvents.END_PORTAL_FRAME_FILL, 

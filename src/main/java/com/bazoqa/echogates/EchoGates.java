@@ -3,6 +3,7 @@ package com.bazoqa.echogates;
 import org.slf4j.Logger;
 
 import com.bazoqa.echogates.block.EchoGateBlock;
+import com.bazoqa.echogates.network.GateNetwork;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -64,7 +65,7 @@ public class EchoGates {
             .pushReaction(PushReaction.BLOCK)
             .noLootTable()));
 
-    // Creates a new item crafted from 4 echo shards
+    // Creates the Sculk Heart item, crafted with one echo shard
     public static final DeferredItem<Item> SCULK_HEART = ITEMS.registerSimpleItem("sculk_heart", new Item.Properties());
 
     // Creates a creative tab with the id "echogates:example_tab" for the example item, that is placed after the combat tab
@@ -81,6 +82,7 @@ public class EchoGates {
     public EchoGates(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(GateNetwork::register);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);

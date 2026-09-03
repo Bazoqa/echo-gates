@@ -24,6 +24,7 @@ public class PortalRegistry extends SavedData {
     private static final String DATA_NAME = EchoGates.MODID + "_portals";
     private final List<BlockPos> portals = new ArrayList<>();
     private final Map<BlockPos, BlockPos> portalLinks = new HashMap<>(); // portal position -> linked destination
+    private final Map<BlockPos, String> portalNames = new HashMap<>();
     
     public PortalRegistry() {
     }
@@ -66,6 +67,15 @@ public class PortalRegistry extends SavedData {
                 registry.portalLinks.put(from, to);
             }
         }
+
+        ListTag namesList = tag.getList("Names", Tag.TAG_COMPOUND);
+        for (int i = 0; i < namesList.size(); i++) {
+            CompoundTag nameTag = namesList.getCompound(i);
+            BlockPos pos = NbtUtils.readBlockPos(nameTag, "Pos").orElse(null);
+            if (pos != null && nameTag.contains("Name", Tag.TAG_STRING)) {
+                registry.portalNames.put(pos, nameTag.getString("Name"));
+            }
+        }
         
         return registry;
     }
@@ -95,6 +105,15 @@ public class PortalRegistry extends SavedData {
         }
         
         tag.put("Links", linksList);
+
+        ListTag namesList = new ListTag();
+        for (Map.Entry<BlockPos, String> entry : portalNames.entrySet()) {
+            CompoundTag nameTag = new CompoundTag();
+            nameTag.put("Pos", NbtUtils.writeBlockPos(entry.getKey()));
+            nameTag.putString("Name", entry.getValue());
+            namesList.add(nameTag);
+        }
+        tag.put("Names", namesList);
         return tag;
     }
     
@@ -113,6 +132,7 @@ public class PortalRegistry extends SavedData {
      */
     public void unregisterPortal(BlockPos pos) {
         if (portals.remove(pos)) {
+            portalNames.remove(pos);
             // Remove link FROM this portal
             removePortalLink(pos);
             // Remove all links pointing TO this portal
@@ -152,6 +172,15 @@ public class PortalRegistry extends SavedData {
      */
     public int getPortalCount() {
         return portals.size();
+    }
+
+    public void setPortalName(BlockPos portal, String name) {
+        portalNames.put(portal, name);
+        setDirty();
+    }
+
+    public String getPortalName(BlockPos portal) {
+        return portalNames.get(portal);
     }
     
     /**

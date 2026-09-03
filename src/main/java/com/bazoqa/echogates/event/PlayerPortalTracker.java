@@ -1,8 +1,8 @@
 package com.bazoqa.echogates.event;
 
 import com.bazoqa.echogates.EchoGates;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -16,11 +16,15 @@ public class PlayerPortalTracker {
             return;
         }
         
-        BlockState standingIn = player.level().getBlockState(player.blockPosition());
-        boolean inPortal = standingIn.is(EchoGates.ECHO_GATE.get());
+        // A player's feet can enter the neighboring block while their body still
+        // overlaps the gate. Only reset once their entire bounding box is clear.
+        boolean inPortal = BlockPos.betweenClosedStream(player.getBoundingBox())
+            .anyMatch(pos -> player.level().getBlockState(pos).is(EchoGates.ECHO_GATE.get()));
         
         // If player is no longer standing in an ancient portal, reset everything
         if (!inPortal) {
+            player.getPersistentData().remove(EchoGates.MODID + ":destination_menu_open");
+
             // Clear portal timer if it exists
             if (player.getPersistentData().contains(EchoGates.MODID + ":in_portal")) {
                 player.getPersistentData().remove(EchoGates.MODID + ":portal_time");
